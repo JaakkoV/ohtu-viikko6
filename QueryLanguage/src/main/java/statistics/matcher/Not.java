@@ -1,0 +1,27 @@
+package statistics.matcher;
+
+import statistics.Player;
+
+/**
+ *
+ * @author jaakvirt
+ */
+public class Not implements Matcher {
+
+    private Matcher[] matchers;
+
+    public Not(Matcher... matchers) {
+        this.matchers = matchers;
+    }
+
+    @Override
+    public boolean matches(Player p) {
+        for (Matcher m : matchers) {
+            if (m.matches(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+}
