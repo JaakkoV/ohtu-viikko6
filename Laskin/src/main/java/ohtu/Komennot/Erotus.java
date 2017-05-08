@@ -1,5 +1,7 @@
 package ohtu.Komennot;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import javax.swing.JTextField;
 import ohtu.Sovelluslogiikka;
 
@@ -7,7 +9,7 @@ public class Erotus implements Komento {
 
     private Sovelluslogiikka sovellus;
     private JTextField syotekentta, tuloskentta;
-    int edellinen = 0;
+    Deque<Integer> edelliset = new ArrayDeque<>();
 
     public Erotus(Sovelluslogiikka sovellus, JTextField tuloskentta, JTextField syotekentta) {
         this.sovellus = sovellus;
@@ -19,7 +21,7 @@ public class Erotus implements Komento {
     public void suorita() {
         int syote = 0;
         try {
-            edellinen = Integer.parseInt(syotekentta.getText());
+            edelliset.add(Integer.parseInt(syotekentta.getText()));
             syote = Integer.parseInt(syotekentta.getText());
         } catch (Exception e) {
         }
@@ -31,7 +33,7 @@ public class Erotus implements Komento {
 
     @Override
     public void peru() {
-        sovellus.plus(edellinen);
+        sovellus.plus(edelliset.pollLast());
         syotekentta.setText("");
         tuloskentta.setText("" + sovellus.tulos());
     }
